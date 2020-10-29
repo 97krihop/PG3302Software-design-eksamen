@@ -6,7 +6,11 @@ namespace pgr3302_Eksamen
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			Console.WriteLine("Hi, and welcome to this card game! \nHow many players? (2-4)");
+			string inputString = Console.ReadLine();
+			int inputPlayer = int.Parse(inputString);
+
+			Console.WriteLine(inputPlayer +" players!");
 		}
 	}
 }
