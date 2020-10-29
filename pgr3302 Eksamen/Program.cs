@@ -1,16 +1,30 @@
 ﻿using System;
 
-namespace pgr3302_Eksamen
+namespace pg3302_Eksamen
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hi, and welcome to this card game! \nHow many players? (2-4)");
-			string inputString = Console.ReadLine();
-			int inputPlayer = int.Parse(inputString);
+			Console.WriteLine("Hi, and welcome to this card game!");
 
-			Console.WriteLine(inputPlayer +" players!");
+			bool isReady = false;
+
+			while (!isReady)
+			{
+				Console.WriteLine("How many players? (2-4)");
+				int inputPlayer = int.Parse(Console.ReadLine());
+				if (inputPlayer < 2 || inputPlayer > 4)
+				{
+					Console.WriteLine("Error cant be " + inputPlayer + ". Can only be 2-4 palyers.");
+				}
+				else
+				{
+					Console.WriteLine(inputPlayer + " players!");
+					break;
+
+				}
+			}
 		}
 	}
 }
