@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace pgr3302_Eksamen
+namespace pg3302_Eksamen
 {
 	class Player
 	{
