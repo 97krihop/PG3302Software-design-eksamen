@@ -8,9 +8,7 @@ namespace pg3302_Eksamen
 		{
 			Console.WriteLine("Hi, and welcome to this card game!");
 
-			bool isReady = false;
-
-			while (!isReady)
+			while (true)
 			{
 				Console.WriteLine("How many players? (2-4)");
 				int inputPlayer = int.Parse(Console.ReadLine());
@@ -22,7 +20,6 @@ namespace pg3302_Eksamen
 				{
 					Console.WriteLine(inputPlayer + " players!");
 					break;
-
 				}
 			}
 		}
