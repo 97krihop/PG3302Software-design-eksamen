@@ -6,24 +6,22 @@ namespace pg3302_Eksamen
     internal class Player
     {
         private readonly List<Cards> _hand;
-        private readonly Random _cardNumber;
 
         public Player()
         {
             _hand = new List<Cards>();
-            _cardNumber = new Random();
         }
 
-        public void showHand()
+        public void ShowHand()
         {
             foreach (var card in _hand)
             {
                 Console.WriteLine(card.ToString());
             }
         }
-        public void draw()
+        public void AddCardToHand(Cards drawCard)
         {
-            _hand.Add((Cards) _cardNumber.Next(0, 52));
+            _hand.Add(drawCard);    
         }
     }
 }

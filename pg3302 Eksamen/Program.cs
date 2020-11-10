@@ -19,11 +19,19 @@ namespace pg3302_Eksamen
                 else
                 {
                     Console.WriteLine(inputPlayer + " players!");
-                    var player1 = new Player();
-                    player1.draw();
-                    player1.showHand();
-                    player1.draw();
-                    player1.showHand();
+                    var dealer = new Dealer();
+                    
+                    for (var i = 0; i < inputPlayer; i++)
+                    {
+                        var player = new Player();
+                        Console.WriteLine("-------------");
+                        Console.WriteLine("player: " + (i+1));
+                        player.AddCardToHand(dealer.DrawCard());
+                        player.AddCardToHand(dealer.DrawCard());
+                        player.AddCardToHand(dealer.DrawCard());
+                        player.AddCardToHand(dealer.DrawCard());
+                        player.ShowHand();
+                    }
                     break;
                 }
             }
