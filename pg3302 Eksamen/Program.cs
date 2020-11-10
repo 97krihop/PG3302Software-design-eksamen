@@ -19,6 +19,11 @@ namespace pg3302_Eksamen
                 else
                 {
                     Console.WriteLine(inputPlayer + " players!");
+                    var player1 = new Player();
+                    player1.draw();
+                    player1.showHand();
+                    player1.draw();
+                    player1.showHand();
                     break;
                 }
             }
