@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace pg3302_Eksamen
+﻿namespace pg3302_Eksamen
 {
-	class Dealer
-	{
-	}
+    internal class Dealer
+    {
+    }
 }
