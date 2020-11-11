@@ -20,18 +20,37 @@ namespace pg3302_Eksamen
                 {
                     Console.WriteLine(inputPlayer + " players!");
                     var dealer = new Dealer();
-                    
+                    var player = new Player[inputPlayer];
                     for (var i = 0; i < inputPlayer; i++)
                     {
-                        var player = new Player();
+                        player[i] = new Player();
                         Console.WriteLine("-------------");
-                        Console.WriteLine("player: " + (i+1));
-                        player.AddCardToHand(dealer.DrawCard());
-                        player.AddCardToHand(dealer.DrawCard());
-                        player.AddCardToHand(dealer.DrawCard());
-                        player.AddCardToHand(dealer.DrawCard());
-                        player.ShowHand();
+                        Console.WriteLine("player: " + (i + 1));
+                        player[i].AddCardToHand(dealer.DrawCard());
+                        player[i].AddCardToHand(dealer.DrawCard());
+                        player[i].AddCardToHand(dealer.DrawCard());
+                        player[i].AddCardToHand(dealer.DrawCard());
+                        player[i].ShowHand();
                     }
+
+                    var win = false;
+                    while (!win)
+                    {
+                        for (var i = 0; i < inputPlayer; i++)
+                        {
+                            Console.WriteLine("-------------");
+                            Console.WriteLine("player: " + (i + 1));
+                            player[i].AddCardToHand(dealer.DrawCard());
+                            dealer.DiscardCard(player[i].RemoveCardToHand());
+                            player[i].ShowHand();
+                            win = player[i].SeeIfWins();
+                            if (win)
+                            {
+                                Console.WriteLine("player" + i + " wins!!!");
+                            }
+                        }
+                    }
+
                     break;
                 }
             }
