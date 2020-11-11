@@ -37,9 +37,10 @@ namespace pg3302_Eksamen
         }
 
         public void drawSpesial()
-        {    
+        {
             _specialCards.Clear();
-            for(int i = 0; i < 4; i++){
+            for (int i = 0; i < 4; i++)
+            {
                 while (true)
                 {
                     var cardNumber = _randomNumber.Next(0, 52);
