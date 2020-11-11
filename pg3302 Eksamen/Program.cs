@@ -2,9 +2,9 @@
 
 namespace pg3302_Eksamen
 {
-    internal class Program
+    internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             Console.WriteLine("Hi, and welcome to this card game!");
 
@@ -46,7 +46,7 @@ namespace pg3302_Eksamen
                             win = player[i].SeeIfWins();
                             if (win)
                             {
-                                Console.WriteLine("player" + i + " wins!!!");
+                                Console.WriteLine("player " + (i + 1) + " wins!!!");
                             }
                         }
                     }

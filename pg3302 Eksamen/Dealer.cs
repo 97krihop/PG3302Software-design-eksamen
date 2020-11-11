@@ -26,8 +26,7 @@ namespace pg3302_Eksamen
 
         public Cards DrawCard()
         {
-            if (_stack.Count <= 4)
-                ReShuffleDiscardedCards();
+            if (_stack.Count <= 4) ReShuffleDiscardedCards();
             while (true)
             {
                 var cardNumber = _randomNumber.Next(0, 52);
@@ -37,12 +36,22 @@ namespace pg3302_Eksamen
             }
         }
 
+        public void drawSpesial()
+        {    
+            _specialCards.Clear();
+            for(int i = 0; i < 4; i++){
+                while (true)
+                {
+                    var cardNumber = _randomNumber.Next(0, 52);
+                    if (!_stack.Contains((Cards) cardNumber)) continue;
+                    _specialCards.Add((Cards) cardNumber);
+                }
+            }
+        }
+
         private void ReShuffleDiscardedCards()
         {
-            foreach (var card in _discardedCards)
-            {
-                _stack.Add(card);
-            }
+            foreach (var card in _discardedCards) _stack.Add(card);
             _discardedCards.Clear();
         }
 
