@@ -6,7 +6,7 @@ namespace pg3302_Eksamen
     internal class Dealer
     {
         private readonly List<Cards> _stack;
-        private List<Cards> _specialCards;
+        private readonly List<Cards> _specialCards;
         private readonly List<Cards> _discardedCards;
         private readonly Random _randomNumber;
 
@@ -36,16 +36,17 @@ namespace pg3302_Eksamen
             }
         }
 
-        public void drawSpesial()
+        public void DrawSpecial()
         {
             _specialCards.Clear();
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 while (true)
                 {
                     var cardNumber = _randomNumber.Next(0, 52);
                     if (!_stack.Contains((Cards) cardNumber)) continue;
                     _specialCards.Add((Cards) cardNumber);
+                    break;
                 }
             }
         }

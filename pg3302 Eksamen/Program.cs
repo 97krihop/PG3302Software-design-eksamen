@@ -1,39 +1,37 @@
 ﻿using System;
+using System.Threading;
 
 namespace pg3302_Eksamen
 {
     internal class Program
     {
         private Dealer _dealer;
-        private Player[] _player;
+        private static readonly object Lock = new object();
+        private bool _win;
 
         public void Start()
         {
             Console.WriteLine("Hi, and welcome to this card game!");
 
             var inputPlayer = GetPlayerCount();
+            var players = IntiGame(inputPlayer);
 
-            _player = IntiGame(inputPlayer);
-
-            var win = false;
-            while (!win)
+            _win = false;
+            foreach (var player in players)
             {
-                for (var i = 0; i < inputPlayer; i++)
-                {
-                    Console.WriteLine("-------------");
-                    Console.WriteLine("player: " + (i + 1));
-                    _player[i].AddCardToHand(_dealer.DrawCard());
-                    _dealer.DiscardCard(_player[i].RemoveCardToHand());
-                    _player[i].ShowHand();
-                    win = _player[i].SeeIfWins();
-                    if (win)
-                    {
-                        Console.WriteLine("player " + (i + 1) + " wins!!!");
-                    }
-                }
+                var thread = new Thread(() => { Play(player); });
+                thread.Start();
             }
         }
 
+        private void Play(Player player)
+        {
+            while (!_win)
+            {
+                _win = OneRound(player);
+                Thread.Sleep(200);
+            }
+        }
 
         private static int GetPlayerCount()
         {
@@ -48,7 +46,6 @@ namespace pg3302_Eksamen
             }
         }
 
-
         private Player[] IntiGame(int inputPlayer)
         {
             Console.WriteLine(inputPlayer + " players!");
@@ -56,17 +53,34 @@ namespace pg3302_Eksamen
             var player = new Player[inputPlayer];
             for (var i = 0; i < inputPlayer; i++)
             {
-                player[i] = new Player();
+                player[i] = new Player(_dealer, i + 1);
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + (i + 1));
-                player[i].AddCardToHand(_dealer.DrawCard());
-                player[i].AddCardToHand(_dealer.DrawCard());
-                player[i].AddCardToHand(_dealer.DrawCard());
-                player[i].AddCardToHand(_dealer.DrawCard());
+                Console.WriteLine("player: " + player[i].GetId());
+                player[i].AddCardToHand();
+                player[i].AddCardToHand();
+                player[i].AddCardToHand();
+                player[i].AddCardToHand();
                 player[i].ShowHand();
             }
 
+            _dealer.DrawSpecial();
             return player;
+        }
+
+        private static bool OneRound(Player player)
+        {
+            lock (Lock)
+            {
+                Console.WriteLine("-------------");
+                Console.WriteLine("player: " + player.GetId());
+                player.AddCardToHand();
+                player.RemoveCardToHand();
+                player.ShowHand();
+            }
+            var winning = player.SeeIfWins();
+            if (winning)
+                Console.WriteLine("player " + player.GetId() + " wins!!!");
+            return winning;
         }
     }
 }
