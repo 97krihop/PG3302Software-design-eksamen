@@ -3,16 +3,14 @@ using System.Collections.Generic;
 
 namespace pg3302_Eksamen
 {
-    internal class Dealer
+    public class Dealer
     {
-        private readonly List<Cards> _stack;
-        private readonly List<Cards> _discardedCards;
+        private readonly List<Cards> _stack = new List<Cards>();
+        private readonly List<Cards> _discardedCards = new List<Cards>();
         private readonly Random _randomNumber;
 
         public Dealer()
         {
-            _stack = new List<Cards>();
-            _discardedCards = new List<Cards>();
             _randomNumber = new Random();
             for (var i = 0; i < 52; i++) _stack.Add((Cards) i);
             Console.WriteLine("added card to stack");
@@ -26,7 +24,7 @@ namespace pg3302_Eksamen
                 var cardNumber = _randomNumber.Next(1, 52);
                 if (!_stack.Contains((Cards) cardNumber)) continue;
                 _stack.Remove((Cards) cardNumber);
-                if (SpecialCards.EqualJoker((Cards)cardNumber)) cardNumber = 100;
+                if (SpecialCards.EqualJoker((Cards) cardNumber)) cardNumber = 100;
                 return (Cards) cardNumber;
             }
         }

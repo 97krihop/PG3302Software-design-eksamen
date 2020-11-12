@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace pg3302_Eksamen
 {
@@ -8,32 +7,15 @@ namespace pg3302_Eksamen
     {
         private Dealer _dealer;
         private static readonly object Lock = new object();
-        private bool _win;
+        private static bool _win;
 
         public void Start()
         {
             Console.WriteLine("Hi, and welcome to this card game!");
-
             var inputPlayer = GetPlayerCount();
             var players = IntiGame(inputPlayer);
 
-            _win = false;
-            var i = 1;
-            foreach (var player in players)
-            {
-                var thread = new Thread(() => { Play(player); }) {Name = i.ToString()};
-                thread.Start();
-                i++;
-            }
-        }
-
-        private void Play(IPlayer player)
-        {
-            while (!_win)
-            {
-                OneRound(player);
-                Thread.Sleep(200);
-            }
+            Thread.GenerateThread(players);
         }
 
         private static int GetPlayerCount()
@@ -59,14 +41,10 @@ namespace pg3302_Eksamen
                 player[i] = new Player(_dealer);
                 Console.WriteLine("-------------");
                 Console.WriteLine("player: " + (1 + i));
-                for (var j = 0; j < 4; j++)
-                {
-                    player[i].AddNonSpecialCardToHand();
-                }
-
+                for (var j = 0; j < 4; j++) player[i].AddNonSpecialCardToHand();
                 player[i].ShowHand();
                 if (!player[i].SeeIfWins()) continue;
-                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine("player " + System.Threading.Thread.CurrentThread.Name + " wins!!!");
                 _win = true;
             }
 
@@ -74,13 +52,13 @@ namespace pg3302_Eksamen
             return player;
         }
 
-        private void OneRound(IPlayer player)
+        public static void OneRound(IPlayer player)
         {
             lock (Lock)
             {
-                if (_win) return;
+                if (GetWin()) return;
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + Thread.CurrentThread.Name);
+                Console.WriteLine("player: " + System.Threading.Thread.CurrentThread.Name);
                 var canGo = player.AddCardToHand(player);
                 if (canGo)
                 {
@@ -89,9 +67,14 @@ namespace pg3302_Eksamen
                 }
 
                 if (!player.SeeIfWins()) return;
-                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine("player " + System.Threading.Thread.CurrentThread.Name + " wins!!!");
                 _win = true;
             }
+        }
+
+        public static bool GetWin()
+        {
+            return _win;
         }
     }
 }
