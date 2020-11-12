@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace pg3302_Eksamen
 {
-    internal class Program
+    public class Program
     {
-        private Dealer _dealer;
+        private readonly IDealer _dealer;
         private static readonly object Lock = new object();
         private static bool _win;
+
+        public Program()
+        {
+            _dealer = Factory.GenerateDealer();
+        }
 
         public void Start()
         {
@@ -15,7 +21,7 @@ namespace pg3302_Eksamen
             var inputPlayer = GetPlayerCount();
             var players = IntiGame(inputPlayer);
 
-            Threads.GenerateThread(players);
+            Factory.GenerateThread(players);
         }
 
         private static int GetPlayerCount()
@@ -31,20 +37,20 @@ namespace pg3302_Eksamen
             }
         }
 
-        private IEnumerable<Player> IntiGame(int inputPlayer)
+        private IEnumerable<IPlayer> IntiGame(int inputPlayer)
         {
             Console.WriteLine(inputPlayer + " players!");
-            _dealer = new Dealer();
-            var player = new Player[inputPlayer];
+
+            var player = Factory.GenerateListPlayers();
             for (var i = 0; i < inputPlayer; i++)
             {
-                player[i] = new Player(_dealer);
+                player.Add(Factory.GeneratePlayer(_dealer));
                 Console.WriteLine("-------------");
                 Console.WriteLine("player: " + (1 + i));
                 for (var j = 0; j < 4; j++) player[i].AddNonSpecialCardToHand();
                 player[i].ShowHand();
                 if (!player[i].SeeIfWins()) continue;
-                Console.WriteLine("player " + System.Threading.Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
                 _win = true;
             }
 
@@ -58,7 +64,7 @@ namespace pg3302_Eksamen
             {
                 if (GetWin()) return;
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + System.Threading.Thread.CurrentThread.Name);
+                Console.WriteLine("player: " + Thread.CurrentThread.Name);
                 var canGo = player.AddCardToHand(player);
                 if (canGo)
                 {
@@ -67,7 +73,7 @@ namespace pg3302_Eksamen
                 }
 
                 if (!player.SeeIfWins()) return;
-                Console.WriteLine("player " + System.Threading.Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
                 _win = true;
             }
         }

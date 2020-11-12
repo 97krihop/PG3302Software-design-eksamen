@@ -6,13 +6,14 @@ namespace pg3302_Eksamen
 {
     public class Player : IPlayer
     {
-        private readonly Dealer _dealer;
-        private readonly List<Cards> _hand = new List<Cards>();
+        private readonly IDealer _dealer;
+        private readonly List<Cards> _hand;
         private bool _quarantine;
 
-        public Player(Dealer dealer)
+        public Player(IDealer dealer)
         {
             _dealer = dealer;
+            _hand = Factory.GenerateListCards();
         }
 
         public void ShowHand()
@@ -22,7 +23,11 @@ namespace pg3302_Eksamen
 
         private Dictionary<string, int> Calc(bool countJoker)
         {
-            var suite = new Dictionary<string, int> {{"Heart", 0}, {"Spade", 0}, {"Diamond", 0}, {"Club", 0}};
+            var suite = Factory.GenerateDictionary();
+            suite.Add("Heart", 0);
+            suite.Add("Spade", 0);
+            suite.Add("Diamond", 0);
+            suite.Add("Club", 0);
 
             foreach (var card in _hand)
             {
@@ -69,8 +74,7 @@ namespace pg3302_Eksamen
             }
 
             var card = _dealer.DrawCard();
-            var go = SpecialCards.SeeIfSpecialCard(player, card);
-            if (!go) _hand.Add(card);
+            if (SpecialCards.SeeIfSpecialCard(player, card)) _hand.Add(card);
             return true;
         }
 
@@ -86,11 +90,17 @@ namespace pg3302_Eksamen
 
         public void RemoveCardFromHand()
         {
-            var dictionary = Calc(false);
+            var remove = CalculateCard(Calc(false));
+            if (remove == null) return;
+            _hand.Remove((Cards) remove);
+            _dealer.DiscardCard((Cards) remove);
+        }
+
+        private Cards? CalculateCard(Dictionary<string, int> suite)
+        {
             var lowest = 100;
             var cardSuite = "";
-
-            foreach (var (key, value) in dictionary)
+            foreach (var (key, value) in suite)
             {
                 if (value >= lowest || value == 0) continue;
                 lowest = value;
@@ -100,11 +110,7 @@ namespace pg3302_Eksamen
             Cards? remove = null;
             foreach (var card in _hand.Where(card => card.ToString().StartsWith(cardSuite)))
                 remove = card;
-
-
-            if (remove == null) return;
-            _hand.Remove((Cards) remove);
-            _dealer.DiscardCard((Cards) remove);
+            return remove;
         }
 
         public void RemoveAllCardFromHand()

@@ -4,7 +4,7 @@
     {
         private static void Main()
         {
-            var program = new Program();
+            var program = Factory.GenerateProgram();
             program.Start();
         }
     }
