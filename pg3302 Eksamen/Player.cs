@@ -98,7 +98,6 @@ namespace pg3302_Eksamen
             }
 
             Cards? remove = null;
-
             foreach (var card in _hand.Where(card => card.ToString().StartsWith(cardSuite)))
                 remove = card;
 

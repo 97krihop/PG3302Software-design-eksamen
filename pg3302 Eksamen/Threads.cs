@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+
 
 namespace pg3302_Eksamen
 {
-    public static class Thread
+    public static class Threads
     {
         public static void GenerateThread(IEnumerable<Player> players)
         {
             var i = 1;
             foreach (var player in players)
             {
-                var thread = new System.Threading.Thread(() => { Play(player); }) {Name = i.ToString()};
+                var thread = new Thread(() => { Play(player); }) {Name = i.ToString()};
                 thread.Start();
                 i++;
+                
             }
         }
 
@@ -20,7 +23,7 @@ namespace pg3302_Eksamen
             while (!Program.GetWin())
             {
                 Program.OneRound(player);
-                System.Threading.Thread.Sleep(200);
+                Thread.Sleep(200);
             }
         }
     }

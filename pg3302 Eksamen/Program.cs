@@ -15,7 +15,7 @@ namespace pg3302_Eksamen
             var inputPlayer = GetPlayerCount();
             var players = IntiGame(inputPlayer);
 
-            Thread.GenerateThread(players);
+            Threads.GenerateThread(players);
         }
 
         private static int GetPlayerCount()
