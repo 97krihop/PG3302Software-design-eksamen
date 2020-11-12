@@ -3,22 +3,15 @@ using System.Collections.Generic;
 
 namespace pg3302_Eksamen
 {
-    internal class Player
+    internal class Player : IPayer
     {
         private readonly Dealer _dealer;
-        private readonly int _id;
         private readonly List<Cards> _hand;
 
-        public Player(Dealer dealer, int id)
+        public Player(Dealer dealer)
         {
             _dealer = dealer;
-            _id = id;
             _hand = new List<Cards>();
-        }
-
-        public int GetId()
-        {
-            return _id;
         }
 
         public void ShowHand()
@@ -56,7 +49,7 @@ namespace pg3302_Eksamen
             _hand.Add(_dealer.DrawCard());
         }
 
-        public void RemoveCardToHand()
+        public void RemoveCardFromHand()
         {
             var card = _hand[0];
             _hand.Remove(card);

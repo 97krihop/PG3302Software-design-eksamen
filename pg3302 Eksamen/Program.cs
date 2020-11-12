@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace pg3302_Eksamen
@@ -17,14 +18,16 @@ namespace pg3302_Eksamen
             var players = IntiGame(inputPlayer);
 
             _win = false;
+            var i = 1;
             foreach (var player in players)
             {
-                var thread = new Thread(() => { Play(player); });
+                var thread = new Thread(() => { Play(player); }) {Name = i.ToString()};
                 thread.Start();
+                i++;
             }
         }
 
-        private void Play(Player player)
+        private void Play(IPayer player)
         {
             while (!_win)
             {
@@ -46,38 +49,40 @@ namespace pg3302_Eksamen
             }
         }
 
-        private Player[] IntiGame(int inputPlayer)
+        private IEnumerable<Player> IntiGame(int inputPlayer)
         {
             Console.WriteLine(inputPlayer + " players!");
             _dealer = new Dealer();
             var player = new Player[inputPlayer];
             for (var i = 0; i < inputPlayer; i++)
             {
-                player[i] = new Player(_dealer, i + 1);
+                player[i] = new Player(_dealer);
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + player[i].GetId());
+                Console.WriteLine("player: " + (1+i));
                 player[i].AddCardToHand();
                 player[i].AddCardToHand();
                 player[i].AddCardToHand();
                 player[i].AddCardToHand();
                 player[i].ShowHand();
             }
+
             return player;
         }
 
-        private static bool OneRound(Player player)
+        private static bool OneRound(IPayer player)
         {
             lock (Lock)
             {
-                Console.WriteLine("-------------");
-                Console.WriteLine("player: " + player.GetId());
                 player.AddCardToHand();
-                player.RemoveCardToHand();
-                player.ShowHand();
+                player.RemoveCardFromHand();
             }
+            Console.WriteLine("-------------");
+            Console.WriteLine("player: " + Thread.CurrentThread.Name);
+            player.ShowHand();
+            
             var winning = player.SeeIfWins();
             if (winning)
-                Console.WriteLine("player " + player.GetId() + " wins!!!");
+                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
             return winning;
         }
     }
