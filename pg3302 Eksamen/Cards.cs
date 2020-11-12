@@ -1,6 +1,8 @@
-﻿namespace pg3302_Eksamen
+﻿// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
+namespace pg3302_Eksamen
 {
-    internal enum Cards
+    public enum Cards
     {
         Heart_Ace = 1,
         Heart_Two,

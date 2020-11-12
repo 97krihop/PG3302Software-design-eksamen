@@ -71,7 +71,7 @@ namespace pg3302_Eksamen
             else
             {
                 var card = _dealer.DrawCard();
-                var go = _dealer.SeeIfSpecialCard(player, card);
+                var go = SpecialCards.SeeIfSpecialCard(player, card);
                 if (!go)
                 {
                     _hand.Add(card);
@@ -83,10 +83,7 @@ namespace pg3302_Eksamen
 
         public void AddNonSpecialCardToHand()
         {
-            if (!_quarantine)
-            {
-                _hand.Add(_dealer.DrawNonSpecialCard());
-            }
+            if (!_quarantine) _hand.Add(_dealer.DrawNonSpecialCard());
             else
             {
                 Console.WriteLine("you are in quarantine");
