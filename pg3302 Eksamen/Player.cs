@@ -40,6 +40,7 @@ namespace pg3302_Eksamen
                     diamond++;
                     club++;
                 }
+
                 if (card.ToString().StartsWith("Heart")) heart++;
                 if (card.ToString().StartsWith("Spade")) spade++;
                 if (card.ToString().StartsWith("Diamond")) diamond++;
@@ -49,8 +50,7 @@ namespace pg3302_Eksamen
             if (heart >= 4) return true;
             if (spade >= 4) return true;
             if (diamond >= 4) return true;
-            if (club >= 4) return true;
-            return false;
+            return club >= 4;
         }
 
 
@@ -61,7 +61,14 @@ namespace pg3302_Eksamen
 
         public bool AddCardToHand(IPlayer player)
         {
-            if (!_quarantine)
+            if (_quarantine)
+            {
+                Console.WriteLine("you are in quarantine");
+                _quarantine = false;
+                return false;
+            }
+            // ReSharper disable once RedundantIfElseBlock
+            else
             {
                 var card = _dealer.DrawCard();
                 var go = _dealer.SeeIfSpecialCard(player, card);
@@ -71,12 +78,6 @@ namespace pg3302_Eksamen
                 }
 
                 return true;
-            }
-            else
-            {
-                Console.WriteLine("you are in quarantine");
-                _quarantine = false;
-                return false;
             }
         }
 
