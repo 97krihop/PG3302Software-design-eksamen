@@ -3,15 +3,17 @@ using System.Collections.Generic;
 
 namespace pg3302_Eksamen
 {
-    internal class Player : IPayer
+    internal class Player : IPlayer
     {
         private readonly Dealer _dealer;
         private readonly List<Cards> _hand;
+        private bool _quarantine;
 
         public Player(Dealer dealer)
         {
             _dealer = dealer;
             _hand = new List<Cards>();
+            _quarantine = false;
         }
 
         public void ShowHand()
@@ -31,6 +33,13 @@ namespace pg3302_Eksamen
 
             foreach (var card in _hand)
             {
+                if (card.ToString().Equals("Joker"))
+                {
+                    heart++;
+                    spade++;
+                    diamond++;
+                    club++;
+                }
                 if (card.ToString().StartsWith("Heart")) heart++;
                 if (card.ToString().StartsWith("Spade")) spade++;
                 if (card.ToString().StartsWith("Diamond")) diamond++;
@@ -44,9 +53,44 @@ namespace pg3302_Eksamen
             return false;
         }
 
-        public void AddCardToHand()
+
+        public void Quarantine()
         {
-            _hand.Add(_dealer.DrawCard());
+            _quarantine = true;
+        }
+
+        public bool AddCardToHand(IPlayer player)
+        {
+            if (!_quarantine)
+            {
+                var card = _dealer.DrawCard();
+                var go = _dealer.SeeIfSpecialCard(player, card);
+                if (!go)
+                {
+                    _hand.Add(card);
+                }
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("you are in quarantine");
+                _quarantine = false;
+                return false;
+            }
+        }
+
+        public void AddNonSpecialCardToHand()
+        {
+            if (!_quarantine)
+            {
+                _hand.Add(_dealer.DrawNonSpecialCard());
+            }
+            else
+            {
+                Console.WriteLine("you are in quarantine");
+                _quarantine = false;
+            }
         }
 
         public void RemoveCardFromHand()
@@ -54,6 +98,16 @@ namespace pg3302_Eksamen
             var card = _hand[0];
             _hand.Remove(card);
             _dealer.DiscardCard(card);
+        }
+
+        public void RemoveAllCardFromHand()
+        {
+            foreach (var card in _hand)
+            {
+                _dealer.DiscardCard(card);
+            }
+
+            _hand.Clear();
         }
     }
 }

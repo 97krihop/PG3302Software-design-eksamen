@@ -27,11 +27,11 @@ namespace pg3302_Eksamen
             }
         }
 
-        private void Play(IPayer player)
+        private void Play(IPlayer player)
         {
             while (!_win)
             {
-                _win = OneRound(player);
+                OneRound(player);
                 Thread.Sleep(200);
             }
         }
@@ -58,32 +58,40 @@ namespace pg3302_Eksamen
             {
                 player[i] = new Player(_dealer);
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + (1+i));
-                player[i].AddCardToHand();
-                player[i].AddCardToHand();
-                player[i].AddCardToHand();
-                player[i].AddCardToHand();
+                Console.WriteLine("player: " + (1 + i));
+                for (var j = 0; j < 4; j++)
+                {
+                    player[i].AddNonSpecialCardToHand();
+                }
+
                 player[i].ShowHand();
+                if (!player[i].SeeIfWins()) continue;
+                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
+                _win = true;
             }
 
+            _dealer.DrawSpecialCard();
             return player;
         }
 
-        private static bool OneRound(IPayer player)
+        private void OneRound(IPlayer player)
         {
             lock (Lock)
             {
-                player.AddCardToHand();
-                player.RemoveCardFromHand();
-            }
-            Console.WriteLine("-------------");
-            Console.WriteLine("player: " + Thread.CurrentThread.Name);
-            player.ShowHand();
-            
-            var winning = player.SeeIfWins();
-            if (winning)
+                if (_win) return;
+                Console.WriteLine("-------------");
+                Console.WriteLine("player: " + Thread.CurrentThread.Name);
+                var canGo = player.AddCardToHand(player);
+                if (canGo)
+                {
+                    player.RemoveCardFromHand();
+                    player.ShowHand();
+                }
+
+                if (!player.SeeIfWins()) return;
                 Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
-            return winning;
+                _win = true;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     internal enum Cards
     {
-        Heart_Ace,
+        Heart_Ace = 1,
         Heart_Two,
         Heart_Three,
         Heart_Four,
@@ -56,6 +56,7 @@
         Club_Ten,
         Club_Jack,
         Club_Queen,
-        Club_King
+        Club_King,
+        Joker = 100
     }
 }
