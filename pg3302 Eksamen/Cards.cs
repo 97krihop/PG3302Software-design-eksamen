@@ -58,16 +58,4 @@
         Club_Queen,
         Club_King
     }
-
-    internal enum cardSpecial
-    {
-        Bomben,
-        Gribben,
-        Karantene,
-        Jokeren
-    }
-
-    internal class Game
-    {
-    }
 }

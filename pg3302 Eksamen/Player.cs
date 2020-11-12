@@ -20,7 +20,7 @@ namespace pg3302_Eksamen
         {
             return _id;
         }
-        
+
         public void ShowHand()
         {
             foreach (var card in _hand)

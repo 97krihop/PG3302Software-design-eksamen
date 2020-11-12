@@ -62,8 +62,6 @@ namespace pg3302_Eksamen
                 player[i].AddCardToHand();
                 player[i].ShowHand();
             }
-
-            _dealer.DrawSpecial();
             return player;
         }
 
