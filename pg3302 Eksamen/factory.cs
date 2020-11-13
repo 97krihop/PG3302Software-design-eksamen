@@ -17,8 +17,8 @@ namespace pg3302_Eksamen
                     {
                         while (!Game.GetWin())
                         {
-                            Game.OneRound(player);
                             Thread.Sleep(200);
+                            Game.OneRound(player);
                         }
                     })
                     {Name = i.ToString()};

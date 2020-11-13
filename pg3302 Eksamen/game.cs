@@ -24,7 +24,6 @@ namespace pg3302_Eksamen
 
         private static int GetPlayerCount()
         {
-            
             while (true)
             {
                 Console.WriteLine("How many players? (2-4)");
@@ -63,10 +62,9 @@ namespace pg3302_Eksamen
                 StandardMessage.PlayerMassage();
                 var canGo = player.AddCardToHand(player);
                 if (canGo)
-                {
                     player.RemoveCardFromHand();
-                    player.ShowHand();
-                }
+                player.ShowHand();
+
 
                 if (!player.SeeIfWins()) return;
                 _win = true;

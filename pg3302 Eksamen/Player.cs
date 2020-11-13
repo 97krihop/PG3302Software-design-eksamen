@@ -31,12 +31,17 @@ namespace pg3302_Eksamen
 
             foreach (var card in _hand)
             {
-                if (SpecialCards.EqualJoker(card) && countWithJoker)
+                if (SpecialCards.EqualJoker(card))
                 {
-                    suite["Heart"]++;
-                    suite["Spade"]++;
-                    suite["Diamond"]++;
-                    suite["Club"]++;
+                    if (countWithJoker)
+                    {
+                        suite["Heart"]++;
+                        suite["Spade"]++;
+                        suite["Diamond"]++;
+                        suite["Club"]++;
+                    }
+
+                    continue;
                 }
 
                 if (card.ToString().StartsWith("Heart")) suite["Heart"]++;
@@ -75,7 +80,8 @@ namespace pg3302_Eksamen
 
             var card = _dealer.DrawCard();
             if (SpecialCards.SeeIfSpecialCard(player, card)) _hand.Add(card);
-            return true;
+            StandardMessage.DrawMassage(card);
+            return !SpecialCards.EqualBomb(card);
         }
 
         public void AddNonSpecialCardToHand(int amount)
@@ -89,7 +95,9 @@ namespace pg3302_Eksamen
                     return;
                 }
 
-                _hand.Add(_dealer.DrawNonSpecialCard());
+                var card = _dealer.DrawNonSpecialCard();
+                _hand.Add(card);
+                StandardMessage.DrawMassage(card);
             }
         }
 

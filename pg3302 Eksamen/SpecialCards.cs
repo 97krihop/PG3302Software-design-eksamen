@@ -10,6 +10,10 @@ namespace pg3302_Eksamen
         public static bool EqualJoker(Cards card)
         {
             return SpecialCard[3].Equals(card);
+        }        
+        public static bool EqualBomb(Cards card)
+        {
+            return SpecialCard[2].Equals(card);
         }
 
         public static void SetCard(Cards card)

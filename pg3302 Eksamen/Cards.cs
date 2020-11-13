@@ -58,7 +58,6 @@ namespace pg3302_Eksamen
         Club_Ten,
         Club_Jack,
         Club_Queen,
-        Club_King,
-        Joker = 100
+        Club_King
     }
 }

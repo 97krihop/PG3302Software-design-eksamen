@@ -21,6 +21,10 @@ namespace pg3302_Eksamen
         public static void StartMassage()
         {
             Console.WriteLine("Hi, and welcome to this card game!");
+        }        
+        public static void DrawMassage(Cards card)
+        {
+            Console.WriteLine($"Player {Thread.CurrentThread.Name}: drew {card.ToString().Replace("_"," of ")}");
         }
 
         public static void HandMassage(IEnumerable<Cards> cards)
