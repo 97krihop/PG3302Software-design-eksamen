@@ -4,32 +4,19 @@ using System.Linq;
 
 namespace pg3302_Eksamen
 {
-    public class Player : IPlayer
+    public class Player : BasePlayer
     {
-        private readonly IDealer _dealer;
-        private readonly List<Cards> _hand;
-        private bool _quarantine;
-
         public Player(IDealer dealer)
         {
-            _dealer = dealer;
-            _hand = Factory.GenerateListCards();
-        }
-
-        public void ShowHand()
-        {
-            StandardMessage.HandMassage(_hand);
+            Dealer = dealer;
+            Hand = new List<Cards>();
         }
 
         private Dictionary<string, int> CalcPoints(bool countWithJoker)
         {
-            var suite = Factory.GenerateDictionary();
-            suite.Add("Heart", 0);
-            suite.Add("Spade", 0);
-            suite.Add("Diamond", 0);
-            suite.Add("Club", 0);
+            var suite = new Dictionary<string, int> {{"Heart", 0}, {"Spade", 0}, {"Diamond", 0}, {"Club", 0}};
 
-            foreach (var card in _hand)
+            foreach (var card in Hand)
             {
                 if (SpecialCards.EqualJoker(card))
                 {
@@ -52,9 +39,8 @@ namespace pg3302_Eksamen
 
             return suite;
         }
-
-
-        public bool SeeIfWins()
+        
+        public override bool SeeIfWins()
         {
             var suite = CalcPoints(true);
             if (suite["Heart"] >= 4) return true;
@@ -62,53 +48,19 @@ namespace pg3302_Eksamen
             if (suite["Diamond"] >= 4) return true;
             return suite["Club"] >= 4;
         }
-
-
-        public void Quarantine()
+        
+        public override void SetQuarantine()
         {
-            _quarantine = true;
+            Quarantine = true;
         }
 
-        public bool AddCardToHand(IPlayer player)
-        {
-            if (_quarantine)
-            {
-                Console.WriteLine("you are in quarantine");
-                _quarantine = false;
-                return false;
-            }
-
-            var card = _dealer.DrawCard();
-            if (SpecialCards.SeeIfSpecialCard(player, card)) _hand.Add(card);
-            StandardMessage.DrawMassage(card);
-            return !SpecialCards.EqualBomb(card);
-        }
-
-        public void AddNonSpecialCardToHand(int amount)
-        {
-            for (var i = 0; i < amount; i++)
-            {
-                if (_quarantine)
-                {
-                    Console.WriteLine("you are in quarantine");
-                    _quarantine = false;
-                    return;
-                }
-
-                var card = _dealer.DrawNonSpecialCard();
-                _hand.Add(card);
-                StandardMessage.DrawMassage(card);
-            }
-        }
-
-        public void RemoveCardFromHand()
+        public override void RemoveCardFromHand()
         {
             var card = CalculateCard(CalcPoints(false));
-            _hand.Remove(card);
-            _dealer.DiscardCard(card);
+            Hand.Remove(card);
+            Dealer.DiscardCard(card);
         }
-
-
+        
         private Cards CalculateCard(Dictionary<string, int> suite)
         {
             var lowest = 100;
@@ -121,17 +73,11 @@ namespace pg3302_Eksamen
             }
 
             Cards? result = null;
-            foreach (var card in _hand.Where(card =>
+            foreach (var card in Hand.Where(card =>
                 card.ToString().StartsWith(cardSuite) && !SpecialCards.EqualJoker(card)))
                 result = card;
             if (result == null) throw new NullReferenceException();
             return (Cards) result;
-        }
-
-        public void RemoveAllCardFromHand()
-        {
-            foreach (var card in _hand) _dealer.DiscardCard(card);
-            _hand.Clear();
         }
     }
 }

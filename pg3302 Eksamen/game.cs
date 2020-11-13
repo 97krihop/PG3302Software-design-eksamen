@@ -40,7 +40,7 @@ namespace pg3302_Eksamen
 
         private IEnumerable<IPlayer> IntiGame(int inputPlayer)
         {
-            var player = Factory.GenerateListPlayers();
+            var player = new List<IPlayer>();
             for (var i = 0; i < inputPlayer; i++)
             {
                 player.Add(Factory.GeneratePlayer(_dealer));

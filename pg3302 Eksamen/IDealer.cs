@@ -1,10 +1,7 @@
 ﻿namespace pg3302_Eksamen
 {
-    public interface IDealer
+    public interface IDealer : IDrawCard, IDiscardCard
+
     {
-        Cards DrawCard();
-        void DrawSpecialCards();
-        void DiscardCard(Cards card);
-        Cards DrawNonSpecialCard();
     }
 }

@@ -5,7 +5,7 @@ namespace pg3302_Eksamen
 {
     public static class SpecialCards
     {
-        private static readonly List<Cards> SpecialCard = Factory.GenerateListCards();
+        private static readonly List<Cards> SpecialCard =  new List<Cards>();
 
         public static bool EqualJoker(Cards card)
         {
@@ -36,8 +36,8 @@ namespace pg3302_Eksamen
             switch (number)
             {
                 case 1:
-                    Console.WriteLine("you drew Quarantine");
-                    player.Quarantine();
+                    Console.WriteLine("you drew SetQuarantine");
+                    player.SetQuarantine();
                     break;
                 case 2:
                     Console.WriteLine("you drew Vulture");

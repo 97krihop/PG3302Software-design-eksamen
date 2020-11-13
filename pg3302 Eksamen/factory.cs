@@ -37,22 +37,7 @@ namespace pg3302_Eksamen
         {
             return new Player(dealer);
         }
-
-        public static List<IPlayer> GenerateListPlayers()
-        {
-            return new List<IPlayer>();
-        }
-
-        public static List<Cards> GenerateListCards()
-        {
-            return new List<Cards>();
-        }
-
-        public static Dictionary<string, int> GenerateDictionary()
-        {
-            return new Dictionary<string, int>();
-        }
-
+        
         public static Game GenerateProgram()
         {
             return new Game();

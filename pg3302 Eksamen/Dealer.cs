@@ -5,8 +5,8 @@ namespace pg3302_Eksamen
 {
     public class Dealer : IDealer
     {
-        private readonly List<Cards> _stack = Factory.GenerateListCards();
-        private readonly List<Cards> _discardedCards = Factory.GenerateListCards();
+        private readonly List<Cards> _stack =  new List<Cards>();
+        private readonly List<Cards> _discardedCards =  new List<Cards>();
         private readonly Random _randomNumber;
 
         public Dealer()
@@ -38,7 +38,7 @@ namespace pg3302_Eksamen
         {
             //Bomb = _specialCards[0]
             //Vulture = _specialCards[1]
-            //Quarantine = _specialCards[2]
+            //SetQuarantine = _specialCards[2]
             //Joker = _specialCards[3]
             for (var i = 0; i < 4; i++)
             {
