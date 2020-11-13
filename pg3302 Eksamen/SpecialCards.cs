@@ -37,7 +37,7 @@ namespace pg3302_Eksamen
                     return true;
                 case 2:
                     Console.WriteLine("you drew vulture");
-                    player.AddNonSpecialCardToHand();
+                    player.AddNonSpecialCardToHand(1);
                     return true;
                 case 3:
                     Console.WriteLine("you drew bomb");

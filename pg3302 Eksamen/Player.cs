@@ -78,13 +78,18 @@ namespace pg3302_Eksamen
             return true;
         }
 
-        public void AddNonSpecialCardToHand()
+        public void AddNonSpecialCardToHand(int amount)
         {
-            if (!_quarantine) _hand.Add(_dealer.DrawNonSpecialCard());
-            else
+            for (var i = 0; i < amount; i++)
             {
-                Console.WriteLine("you are in quarantine");
-                _quarantine = false;
+                if (!_quarantine)
+                {
+                    Console.WriteLine("you are in quarantine");
+                    _quarantine = false;
+                    return;
+                }
+
+                _hand.Add(_dealer.DrawNonSpecialCard());
             }
         }
 
@@ -107,10 +112,10 @@ namespace pg3302_Eksamen
                 cardSuite = key;
             }
 
-            Cards? remove = null;
+            Cards? result = null;
             foreach (var card in _hand.Where(card => card.ToString().StartsWith(cardSuite)))
-                remove = card;
-            return remove;
+                result = card;
+            return result;
         }
 
         public void RemoveAllCardFromHand()

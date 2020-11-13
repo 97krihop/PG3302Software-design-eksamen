@@ -6,7 +6,7 @@
         bool SeeIfWins();
         void Quarantine();
         bool AddCardToHand(IPlayer player);
-        void AddNonSpecialCardToHand();
+        void AddNonSpecialCardToHand(int amount);
         void RemoveCardFromHand();
         void RemoveAllCardFromHand();
     }

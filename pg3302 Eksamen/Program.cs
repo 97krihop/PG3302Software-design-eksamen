@@ -46,11 +46,11 @@ namespace pg3302_Eksamen
             {
                 player.Add(Factory.GeneratePlayer(_dealer));
                 Console.WriteLine("-------------");
-                Console.WriteLine("player: " + (1 + i));
-                for (var j = 0; j < 4; j++) player[i].AddNonSpecialCardToHand();
+                Console.WriteLine($"player: {i + 1}");
+                player[i].AddNonSpecialCardToHand(4);
                 player[i].ShowHand();
                 if (!player[i].SeeIfWins()) continue;
-                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine($"player {Thread.CurrentThread.Name} wins!!!");
                 _win = true;
             }
 
