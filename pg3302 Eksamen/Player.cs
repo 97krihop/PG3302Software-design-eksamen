@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace pg3302_Eksamen
@@ -19,7 +18,7 @@ namespace pg3302_Eksamen
 
         public void ShowHand()
         {
-           StandardMessage.HandMassage(_hand);
+            StandardMessage.HandMassage(_hand);
         }
 
         private Dictionary<string, int> CalcPoints(bool countWithJoker)
@@ -96,15 +95,13 @@ namespace pg3302_Eksamen
 
         public void RemoveCardFromHand()
         {
-            var remove = CalculateCard(CalcPoints(false));
-            if (remove == null) throw new NullReferenceException();
-            _hand.Remove((Cards) remove);
-            _dealer.DiscardCard((Cards) remove);
+            var card = CalculateCard(CalcPoints(false));
+            _hand.Remove(card);
+            _dealer.DiscardCard(card);
         }
 
-        
 
-        private Cards? CalculateCard(Dictionary<string, int> suite)
+        private Cards CalculateCard(Dictionary<string, int> suite)
         {
             var lowest = 100;
             var cardSuite = "";
@@ -116,11 +113,11 @@ namespace pg3302_Eksamen
             }
 
             Cards? result = null;
-            foreach (var card in _hand.Where(card => 
-                card.ToString().StartsWith(cardSuite) && 
-                !SpecialCards.EqualJoker(card)))
+            foreach (var card in _hand.Where(card =>
+                card.ToString().StartsWith(cardSuite) && !SpecialCards.EqualJoker(card)))
                 result = card;
-            return result;
+            if (result == null) throw new NullReferenceException();
+            return (Cards) result;
         }
 
         public void RemoveAllCardFromHand()
