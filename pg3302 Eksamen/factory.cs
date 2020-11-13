@@ -10,14 +10,14 @@ namespace pg3302_Eksamen
         {
             var i = 1;
             foreach (var player in players)
-            {                
+            {
                 Console.WriteLine("-------------");
                 Console.WriteLine($"player: {i} Starts now");
                 var thread = new Thread(() =>
                     {
-                        while (!Program.GetWin())
+                        while (!Game.GetWin())
                         {
-                            Program.OneRound(player);
+                            Game.OneRound(player);
                             Thread.Sleep(200);
                         }
                     })
@@ -53,9 +53,9 @@ namespace pg3302_Eksamen
             return new Dictionary<string, int>();
         }
 
-        public static Program GenerateProgram()
+        public static Game GenerateProgram()
         {
-            return new Program();
+            return new Game();
             ;
         }
     }

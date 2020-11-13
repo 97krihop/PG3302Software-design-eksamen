@@ -19,7 +19,7 @@ namespace pg3302_Eksamen
 
         public void ShowHand()
         {
-            foreach (var card in _hand) Console.WriteLine(card.ToString());
+           StandardMessage.HandMassage(_hand);
         }
 
         private Dictionary<string, int> CalcPoints(bool countWithJoker)
