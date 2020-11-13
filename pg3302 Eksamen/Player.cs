@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace pg3302_Eksamen
@@ -21,7 +22,7 @@ namespace pg3302_Eksamen
             foreach (var card in _hand) Console.WriteLine(card.ToString());
         }
 
-        private Dictionary<string, int> Calc(bool countJoker)
+        private Dictionary<string, int> CalcPoints(bool countWithJoker)
         {
             var suite = Factory.GenerateDictionary();
             suite.Add("Heart", 0);
@@ -31,7 +32,7 @@ namespace pg3302_Eksamen
 
             foreach (var card in _hand)
             {
-                if (card.ToString().Equals("Joker") && countJoker)
+                if (SpecialCards.EqualJoker(card) && countWithJoker)
                 {
                     suite["Heart"]++;
                     suite["Spade"]++;
@@ -51,7 +52,7 @@ namespace pg3302_Eksamen
 
         public bool SeeIfWins()
         {
-            var suite = Calc(true);
+            var suite = CalcPoints(true);
             if (suite["Heart"] >= 4) return true;
             if (suite["Spade"] >= 4) return true;
             if (suite["Diamond"] >= 4) return true;
@@ -82,7 +83,7 @@ namespace pg3302_Eksamen
         {
             for (var i = 0; i < amount; i++)
             {
-                if (!_quarantine)
+                if (_quarantine)
                 {
                     Console.WriteLine("you are in quarantine");
                     _quarantine = false;
@@ -95,11 +96,13 @@ namespace pg3302_Eksamen
 
         public void RemoveCardFromHand()
         {
-            var remove = CalculateCard(Calc(false));
-            if (remove == null) return;
+            var remove = CalculateCard(CalcPoints(false));
+            if (remove == null) throw new NullReferenceException();
             _hand.Remove((Cards) remove);
             _dealer.DiscardCard((Cards) remove);
         }
+
+        
 
         private Cards? CalculateCard(Dictionary<string, int> suite)
         {
@@ -113,7 +116,9 @@ namespace pg3302_Eksamen
             }
 
             Cards? result = null;
-            foreach (var card in _hand.Where(card => card.ToString().StartsWith(cardSuite)))
+            foreach (var card in _hand.Where(card => 
+                card.ToString().StartsWith(cardSuite) && 
+                !SpecialCards.EqualJoker(card)))
                 result = card;
             return result;
         }

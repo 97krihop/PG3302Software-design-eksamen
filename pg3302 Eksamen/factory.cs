@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace pg3302_Eksamen
@@ -9,7 +10,9 @@ namespace pg3302_Eksamen
         {
             var i = 1;
             foreach (var player in players)
-            {
+            {                
+                Console.WriteLine("-------------");
+                Console.WriteLine($"player: {i} Starts now");
                 var thread = new Thread(() =>
                     {
                         while (!Program.GetWin())
@@ -43,14 +46,17 @@ namespace pg3302_Eksamen
         public static List<Cards> GenerateListCards()
         {
             return new List<Cards>();
-        }        
+        }
+
         public static Dictionary<string, int> GenerateDictionary()
         {
             return new Dictionary<string, int>();
-        }        
+        }
+
         public static Program GenerateProgram()
         {
-            return new Program();;
+            return new Program();
+            ;
         }
     }
 }

@@ -49,12 +49,10 @@ namespace pg3302_Eksamen
                 Console.WriteLine($"player: {i + 1}");
                 player[i].AddNonSpecialCardToHand(4);
                 player[i].ShowHand();
-                if (!player[i].SeeIfWins()) continue;
-                Console.WriteLine($"player {Thread.CurrentThread.Name} wins!!!");
-                _win = true;
             }
 
-            _dealer.DrawSpecialCard();
+            Console.WriteLine("-------------");
+            _dealer.DrawSpecialCards();
             return player;
         }
 
@@ -73,8 +71,38 @@ namespace pg3302_Eksamen
                 }
 
                 if (!player.SeeIfWins()) return;
-                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
                 _win = true;
+                Console.WriteLine("-------------");
+                Console.WriteLine("player " + Thread.CurrentThread.Name + " wins!!!");
+                Console.WriteLine("<><><><><><><>");
+                Console.WriteLine("-------------");
+                Console.WriteLine("   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░▒▒▒▒░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒░▒▒▒▒▒▒░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒░░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒░░░░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░▒░░░░░░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░▒▒▒░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░░░░░▓▓");
+                Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒░░░░░░▓▓");
+                Console.WriteLine("   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
+                Console.WriteLine("       ▒          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒");
+                Console.WriteLine("      ▒               ▒▒▒▒▒▒▒▒");
+                Console.WriteLine("     ▒                ▒▒▒▒▒▒▒▒");
+                Console.WriteLine("    ▒           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒");
+                Console.WriteLine("   ▒");
+                Console.WriteLine("  ▒      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
+                Console.WriteLine(" ▒      ▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓");
+                Console.WriteLine("▒▒▒▒   ▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓");
+                Console.WriteLine("▒▒▒▒  ▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓");
+                Console.WriteLine("▒▒▒  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
             }
         }
 

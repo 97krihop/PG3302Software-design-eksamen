@@ -3,7 +3,7 @@
     public interface IDealer
     {
         Cards DrawCard();
-        void DrawSpecialCard();
+        void DrawSpecialCards();
         void DiscardCard(Cards card);
         Cards DrawNonSpecialCard();
     }

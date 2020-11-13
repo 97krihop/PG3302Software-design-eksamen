@@ -34,16 +34,19 @@ namespace pg3302_Eksamen
                 case 1:
                     Console.WriteLine("you drew Quarantine");
                     player.Quarantine();
-                    return true;
+                    break;
                 case 2:
-                    Console.WriteLine("you drew vulture");
+                    Console.WriteLine("you drew Vulture");
                     player.AddNonSpecialCardToHand(1);
-                    return true;
+                    break;
                 case 3:
-                    Console.WriteLine("you drew bomb");
+                    Console.WriteLine("you drew Bomb");
                     player.RemoveAllCardFromHand();
                     for (var i = 0; i < 4; i++) player.AddCardToHand(player);
                     return false;
+                case 4:
+                    Console.WriteLine("you drew Joker");
+                    break;
             }
 
             return true;

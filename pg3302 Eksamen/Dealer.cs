@@ -6,7 +6,7 @@ namespace pg3302_Eksamen
     public class Dealer : IDealer
     {
         private readonly List<Cards> _stack = Factory.GenerateListCards();
-        private readonly List<Cards> _discardedCards =  Factory.GenerateListCards();
+        private readonly List<Cards> _discardedCards = Factory.GenerateListCards();
         private readonly Random _randomNumber;
 
         public Dealer()
@@ -16,20 +16,25 @@ namespace pg3302_Eksamen
             Console.WriteLine("added card to stack");
         }
 
-        public Cards DrawCard()
+        private Cards GetCard()
         {
-            if (_stack.Count <= 4) ReShuffleDiscardedCards();
             while (true)
             {
-                var cardNumber = _randomNumber.Next(1, 52);
-                if (!_stack.Contains((Cards) cardNumber)) continue;
-                _stack.Remove((Cards) cardNumber);
-                if (SpecialCards.EqualJoker((Cards) cardNumber)) cardNumber = 100;
-                return (Cards) cardNumber;
+                var i = _randomNumber.Next(1, 52);
+                if (!_stack.Contains((Cards) i)) continue;
+                return (Cards) i;
             }
         }
 
-        public void DrawSpecialCard()
+        public Cards DrawCard()
+        {
+            if (_stack.Count <= 4) ReShuffleDiscardedCards();
+            var card = GetCard();
+            _stack.Remove(card);
+            return card;
+        }
+
+        public void DrawSpecialCards()
         {
             //Bomb = _specialCards[0]
             //Vulture = _specialCards[1]
@@ -39,11 +44,10 @@ namespace pg3302_Eksamen
             {
                 while (true)
                 {
-                    var cardNumber = _randomNumber.Next(1, 52);
-                    if (!_stack.Contains((Cards) cardNumber) ||
-                        SpecialCards.GetSpecialCards().Contains((Cards) cardNumber)) continue;
-                    SpecialCards.SetCard((Cards) cardNumber);
-                    Console.WriteLine("special cards: " + (Cards) cardNumber);
+                    var card = GetCard();
+                    if (SpecialCards.GetSpecialCards().Contains(card)) continue;
+                    SpecialCards.SetCard(card);
+                    Console.WriteLine($"special{i + 1} cards: {card}");
                     break;
                 }
             }
@@ -65,11 +69,10 @@ namespace pg3302_Eksamen
             if (_stack.Count <= 4) ReShuffleDiscardedCards();
             while (true)
             {
-                var cardNumber = _randomNumber.Next(1, 52);
-                if (!_stack.Contains((Cards) cardNumber) ||
-                    SpecialCards.GetSpecialCards().Contains((Cards) cardNumber)) continue;
-                _stack.Remove((Cards) cardNumber);
-                return (Cards) cardNumber;
+                var card = GetCard();
+                if (SpecialCards.GetSpecialCards().Contains(card)) continue;
+                _stack.Remove(card);
+                return card;
             }
         }
     }
