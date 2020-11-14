@@ -52,7 +52,7 @@ namespace pg3302_Eksamen.Cards
                     Console.WriteLine("-------------");
                     Console.WriteLine($"{message} drew Bomb");
                     player.RemoveAllCardFromHand();
-                    for (var i = 0; i < 4; i++) player.AddCardToHand(player);
+                    player.AddNonSpecialCardToHand(4);
                     return false;
                 case 4:
                     Console.WriteLine("-------------");
