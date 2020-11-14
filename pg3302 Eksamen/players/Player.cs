@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using pg3302_Eksamen.Cards;
+using pg3302_Eksamen.dealers.Interface;
 
-namespace pg3302_Eksamen
+namespace pg3302_Eksamen.players
 {
     public class Player : BasePlayer
     {
@@ -15,7 +17,6 @@ namespace pg3302_Eksamen
             var suite = new Dictionary<string, int> {{"Heart", 0}, {"Spade", 0}, {"Diamond", 0}, {"Club", 0}};
 
             foreach (var card in Hand)
-            {
                 if (SpecialCards.EqualJoker(card))
                 {
                     if (!countWithJoker) continue;
@@ -31,7 +32,6 @@ namespace pg3302_Eksamen
                     if (card.ToString().StartsWith("Diamond")) suite["Diamond"]++;
                     if (card.ToString().StartsWith("Club")) suite["Club"]++;
                 }
-            }
 
             return suite;
         }
@@ -45,8 +45,11 @@ namespace pg3302_Eksamen
             return suite["Club"] >= 4;
         }
 
-        public override void SetQuarantine()=> Quarantine = true;
-        
+        public override void SetQuarantine()
+        {
+            Quarantine = true;
+        }
+
 
         public override void RemoveCardFromHand()
         {
@@ -55,7 +58,7 @@ namespace pg3302_Eksamen
             Dealer.DiscardCard(card);
         }
 
-        private Cards CalculateCard(Dictionary<string, int> suite)
+        private Card CalculateCard(Dictionary<string, int> suite)
         {
             var lowest = 100;
             var cardSuite = "";
@@ -66,12 +69,12 @@ namespace pg3302_Eksamen
                 cardSuite = key;
             }
 
-            Cards? result = null;
+            Card? result = null;
             foreach (var card in Hand.Where(card =>
                 card.ToString().StartsWith(cardSuite) && !SpecialCards.EqualJoker(card)))
                 result = card;
             result ??= Hand[0];
-            return (Cards) result;
+            return (Card) result;
         }
     }
 }

@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using pg3302_Eksamen.dealers.Interface;
+using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen
 {
     public class Game
     {
-        private readonly IDealer _dealer;
         private static readonly object Lock = new object();
         private static bool _win;
+        private readonly IDealer _dealer;
 
-        public Game() => _dealer = Factory.GenerateDealer();
-
+        public Game()
+        {
+            _dealer = Factory.GenerateDealer();
+        }
 
         public void Start()
         {
@@ -29,7 +33,9 @@ namespace pg3302_Eksamen
                 {
                     var inputPlayer = int.Parse(Console.ReadLine()!);
                     if (inputPlayer < 2 || inputPlayer > 4)
+                    {
                         Console.WriteLine($"Error cant be {inputPlayer}. Can only be 2-4 players.");
+                    }
                     else
                     {
                         Console.WriteLine($"{inputPlayer} players!");
@@ -74,6 +80,9 @@ namespace pg3302_Eksamen
             }
         }
 
-        public static bool GetWin() => _win;
+        public static bool GetWin()
+        {
+            return _win;
+        }
     }
 }

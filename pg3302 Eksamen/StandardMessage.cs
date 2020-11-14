@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.Cards;
 
 namespace pg3302_Eksamen
 {
@@ -12,19 +13,23 @@ namespace pg3302_Eksamen
             Console.WriteLine($"player: {i}");
         }
 
-        public static void StartMassage()=> Console.WriteLine("Hi, and welcome to this card game!");
-            
-        public static void DrawMassage(Cards card)
+        public static void StartMassage()
         {
-            Console.WriteLine("-------------");
-            Console.WriteLine($"Player {Thread.CurrentThread.Name}: drew {card.ToString().Replace("_"," of ")}");
+            Console.WriteLine("Hi, and welcome to this card game!");
         }
 
-        public static void HandMassage(IEnumerable<Cards> cards)
-        {    
+
+        public static void DrawMassage(Card card)
+        {
+            Console.WriteLine("-------------");
+            Console.WriteLine($"Player {Thread.CurrentThread.Name}: drew {card.ToString().Replace("_", " of ")}");
+        }
+
+        public static void HandMassage(IEnumerable<Card> cards)
+        {
             Console.WriteLine("-------------");
             Console.WriteLine("Hand:");
-            foreach (var card in cards) 
+            foreach (var card in cards)
                 Console.WriteLine(card.ToString());
         }
 
@@ -33,7 +38,6 @@ namespace pg3302_Eksamen
             Console.WriteLine("-------------");
             Console.WriteLine($"player {Thread.CurrentThread.Name} wins!!!");
             Console.WriteLine("<><><><><><><>");
-            Console.WriteLine("-------------");
             Console.WriteLine("   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
             Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
             Console.WriteLine("   ▓▓░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░▒▒▒▒░░░░░░▓▓");

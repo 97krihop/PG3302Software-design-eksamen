@@ -1,4 +1,4 @@
-﻿namespace pg3302_Eksamen
+﻿namespace pg3302_Eksamen.players.Interface
 {
     public interface IRemoveCardFromHand
     {

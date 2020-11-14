@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using pg3302_Eksamen.Cards;
+using pg3302_Eksamen.dealers.Interface;
+using pg3302_Eksamen.players.Interface;
 
-namespace pg3302_Eksamen
+namespace pg3302_Eksamen.players
 {
     public abstract class BasePlayer : IPlayer
     {
+        protected readonly List<Card> Hand;
+
         //vi har bare 1 underclass men vi viser til at vi vet hvordan en abstract classe skal se ut 
         protected IDealer Dealer;
-        protected readonly List<Cards> Hand;
         protected bool Quarantine;
 
         protected BasePlayer(IDealer dealer)
         {
             Dealer = dealer;
-            Hand = new List<Cards>();
+            Hand = new List<Card>();
         }
 
-        public void ShowHand() => StandardMessage.HandMassage(Hand);
+        public void ShowHand()
+        {
+            StandardMessage.HandMassage(Hand);
+        }
 
 
         public abstract bool SeeIfWins();

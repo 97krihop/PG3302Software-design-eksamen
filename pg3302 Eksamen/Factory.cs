@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.dealers.Interface;
+using pg3302_Eksamen.players;
+using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen
 {
@@ -28,12 +31,21 @@ namespace pg3302_Eksamen
             }
         }
 
-        public static IDealer GenerateDealer() => new Dealer();
+        public static IDealer GenerateDealer()
+        {
+            return new dealers.Dealer();
+        }
 
 
-        public static IPlayer GeneratePlayer(IDealer dealer) => new Player(dealer);
+        public static IPlayer GeneratePlayer(IDealer dealer)
+        {
+            return new Player(dealer);
+        }
 
 
-        public static Game GenerateProgram() => new Game();
+        public static Game GenerateProgram()
+        {
+            return new Game();
+        }
     }
 }

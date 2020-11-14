@@ -1,22 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.players.Interface;
 
-namespace pg3302_Eksamen
+namespace pg3302_Eksamen.Cards
 {
     public static class SpecialCards
     {
-        private static readonly List<Cards> SpecialCard = new List<Cards>();
+        private static readonly List<Card> SpecialCard = new List<Card>();
 
-        public static bool EqualJoker(Cards card) => SpecialCard[3].Equals(card);
+        public static bool EqualJoker(Card card)
+        {
+            return SpecialCard[3].Equals(card);
+        }
 
-        public static bool EqualBomb(Cards card) => SpecialCard[2].Equals(card);
+        public static bool EqualBomb(Card card)
+        {
+            return SpecialCard[2].Equals(card);
+        }
 
-        public static void SetCard(Cards card) => SpecialCard.Add(card);
+        public static void SetCard(Card card)
+        {
+            SpecialCard.Add(card);
+        }
 
-        public static List<Cards> GetSpecialCards() => SpecialCard;
+        public static List<Card> GetSpecialCards()
+        {
+            return SpecialCard;
+        }
 
-        public static bool SeeIfSpecialCard(IPlayer player, Cards card)
+        public static bool SeeIfSpecialCard(IPlayer player, Card card)
         {
             var number = 0;
             for (var i = 0; i < SpecialCard.Count - 1; i++)
