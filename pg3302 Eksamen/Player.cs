@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace pg3302_Eksamen
 {
     public class Player : BasePlayer
     {
-        public Player(IDealer dealer)
+        public Player(IDealer dealer) : base(dealer)
         {
-            Dealer = dealer;
-            Hand = new List<Cards>();
         }
+
 
         private Dictionary<string, int> CalcPoints(bool countWithJoker)
         {
@@ -20,26 +18,24 @@ namespace pg3302_Eksamen
             {
                 if (SpecialCards.EqualJoker(card))
                 {
-                    if (countWithJoker)
-                    {
-                        suite["Heart"]++;
-                        suite["Spade"]++;
-                        suite["Diamond"]++;
-                        suite["Club"]++;
-                    }
-
-                    continue;
+                    if (!countWithJoker) continue;
+                    suite["Heart"]++;
+                    suite["Spade"]++;
+                    suite["Diamond"]++;
+                    suite["Club"]++;
                 }
-
-                if (card.ToString().StartsWith("Heart")) suite["Heart"]++;
-                if (card.ToString().StartsWith("Spade")) suite["Spade"]++;
-                if (card.ToString().StartsWith("Diamond")) suite["Diamond"]++;
-                if (card.ToString().StartsWith("Club")) suite["Club"]++;
+                else
+                {
+                    if (card.ToString().StartsWith("Heart")) suite["Heart"]++;
+                    if (card.ToString().StartsWith("Spade")) suite["Spade"]++;
+                    if (card.ToString().StartsWith("Diamond")) suite["Diamond"]++;
+                    if (card.ToString().StartsWith("Club")) suite["Club"]++;
+                }
             }
 
             return suite;
         }
-        
+
         public override bool SeeIfWins()
         {
             var suite = CalcPoints(true);
@@ -48,11 +44,9 @@ namespace pg3302_Eksamen
             if (suite["Diamond"] >= 4) return true;
             return suite["Club"] >= 4;
         }
+
+        public override void SetQuarantine()=> Quarantine = true;
         
-        public override void SetQuarantine()
-        {
-            Quarantine = true;
-        }
 
         public override void RemoveCardFromHand()
         {
@@ -60,7 +54,7 @@ namespace pg3302_Eksamen
             Hand.Remove(card);
             Dealer.DiscardCard(card);
         }
-        
+
         private Cards CalculateCard(Dictionary<string, int> suite)
         {
             var lowest = 100;
@@ -76,7 +70,7 @@ namespace pg3302_Eksamen
             foreach (var card in Hand.Where(card =>
                 card.ToString().StartsWith(cardSuite) && !SpecialCards.EqualJoker(card)))
                 result = card;
-            if (result == null) throw new NullReferenceException();
+            result ??= Hand[0];
             return (Cards) result;
         }
     }

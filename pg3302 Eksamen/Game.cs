@@ -9,10 +9,8 @@ namespace pg3302_Eksamen
         private static readonly object Lock = new object();
         private static bool _win;
 
-        public Game()
-        {
-            _dealer = Factory.GenerateDealer();
-        }
+        public Game() => _dealer = Factory.GenerateDealer();
+
 
         public void Start()
         {
@@ -27,13 +25,20 @@ namespace pg3302_Eksamen
             while (true)
             {
                 Console.WriteLine("How many players? (2-4)");
-                var inputPlayer = int.Parse(Console.ReadLine()!);
-                if (inputPlayer < 2 || inputPlayer > 4)
-                    Console.WriteLine("Error cant be " + inputPlayer + ". Can only be 2-4 players.");
-                else
+                try
                 {
-                    Console.WriteLine(inputPlayer + " players!");
-                    return inputPlayer;
+                    var inputPlayer = int.Parse(Console.ReadLine()!);
+                    if (inputPlayer < 2 || inputPlayer > 4)
+                        Console.WriteLine($"Error cant be {inputPlayer}. Can only be 2-4 players.");
+                    else
+                    {
+                        Console.WriteLine($"{inputPlayer} players!");
+                        return inputPlayer;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("error cant parse input. Try again");
                 }
             }
         }
@@ -59,12 +64,9 @@ namespace pg3302_Eksamen
             lock (Lock)
             {
                 if (GetWin()) return;
-                StandardMessage.PlayerMassage();
                 var canGo = player.AddCardToHand(player);
-                if (canGo)
-                    player.RemoveCardFromHand();
+                if (canGo) player.RemoveCardFromHand();
                 player.ShowHand();
-
 
                 if (!player.SeeIfWins()) return;
                 _win = true;
@@ -72,9 +74,6 @@ namespace pg3302_Eksamen
             }
         }
 
-        public static bool GetWin()
-        {
-            return _win;
-        }
+        public static bool GetWin() => _win;
     }
 }

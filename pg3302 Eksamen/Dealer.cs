@@ -5,8 +5,8 @@ namespace pg3302_Eksamen
 {
     public class Dealer : IDealer
     {
-        private readonly List<Cards> _stack =  new List<Cards>();
-        private readonly List<Cards> _discardedCards =  new List<Cards>();
+        private readonly List<Cards> _stack = new List<Cards>();
+        private readonly List<Cards> _discardedCards = new List<Cards>();
         private readonly Random _randomNumber;
 
         public Dealer()
@@ -59,10 +59,8 @@ namespace pg3302_Eksamen
             _discardedCards.Clear();
         }
 
-        public void DiscardCard(Cards card)
-        {
-            _discardedCards.Add(card);
-        }
+        public void DiscardCard(Cards card) => _discardedCards.Add(card);
+
 
         public Cards DrawNonSpecialCard()
         {

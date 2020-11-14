@@ -5,20 +5,23 @@ namespace pg3302_Eksamen
 {
     public abstract class BasePlayer : IPlayer
     {
-        
         //vi har bare 1 underclass men vi viser til at vi vet hvordan en abstract classe skal se ut 
         protected IDealer Dealer;
-        protected List<Cards> Hand;
+        protected readonly List<Cards> Hand;
         protected bool Quarantine;
 
-        public void ShowHand()
+        protected BasePlayer(IDealer dealer)
         {
-            StandardMessage.HandMassage(Hand);
+            Dealer = dealer;
+            Hand = new List<Cards>();
         }
+
+        public void ShowHand() => StandardMessage.HandMassage(Hand);
+
 
         public abstract bool SeeIfWins();
         public abstract void SetQuarantine();
-        
+
         public bool AddCardToHand(IPlayer player)
         {
             if (Quarantine)

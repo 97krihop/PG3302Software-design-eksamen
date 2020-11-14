@@ -6,29 +6,24 @@ namespace pg3302_Eksamen
 {
     public static class StandardMessage
     {
-        public static void PlayerMassage()
-        {
-            Console.WriteLine("-------------");
-            Console.WriteLine($"player: {Thread.CurrentThread.Name}");
-        }
-
         public static void PlayerMassage(int i)
         {
             Console.WriteLine("-------------");
             Console.WriteLine($"player: {i}");
         }
 
-        public static void StartMassage()
-        {
-            Console.WriteLine("Hi, and welcome to this card game!");
-        }        
+        public static void StartMassage()=> Console.WriteLine("Hi, and welcome to this card game!");
+            
         public static void DrawMassage(Cards card)
         {
-            Console.WriteLine($"BasePlayer {Thread.CurrentThread.Name}: drew {card.ToString().Replace("_"," of ")}");
+            Console.WriteLine("-------------");
+            Console.WriteLine($"Player {Thread.CurrentThread.Name}: drew {card.ToString().Replace("_"," of ")}");
         }
 
         public static void HandMassage(IEnumerable<Cards> cards)
-        {
+        {    
+            Console.WriteLine("-------------");
+            Console.WriteLine("Hand:");
             foreach (var card in cards) 
                 Console.WriteLine(card.ToString());
         }
