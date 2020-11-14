@@ -34,7 +34,7 @@ namespace pg3302_Eksamen
                     var inputPlayer = int.Parse(Console.ReadLine()!);
                     if (inputPlayer < 2 || inputPlayer > 4)
                     {
-                        Console.WriteLine($"Error cant be {inputPlayer}. Can only be 2-4 players.");
+                        Console.WriteLine($"Error cant be {inputPlayer}. Can only be 2-4 players.")
                     }
                     else
                     {

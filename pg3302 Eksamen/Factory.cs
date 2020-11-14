@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.dealers;
 using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players;
 using pg3302_Eksamen.players.Interface;
@@ -33,7 +34,7 @@ namespace pg3302_Eksamen
 
         public static IDealer GenerateDealer()
         {
-            return new dealers.Dealer();
+            return new Dealer();
         }
 
 
