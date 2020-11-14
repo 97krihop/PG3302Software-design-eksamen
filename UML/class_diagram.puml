@@ -1,4 +1,4 @@
-﻿@startuml
+﻿﻿@startuml
 actor User
 
 box Card game 
