@@ -55,7 +55,7 @@ namespace pg3302_Eksamen
             }
 
             Console.WriteLine("-------------");
-            new SpecialCards();
+            new SpecialCard();
             return player;
         }
 

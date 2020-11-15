@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using pg3302_Eksamen.Cards;
 using pg3302_Eksamen.dealers.Interface;
 
-namespace pg3302_Eksamen.dealers
+namespace pg3302_Eksamen.Dealers
 {
     public class Dealer : IDealer
     {
-        private readonly List<Card> _discardedCards = new List<Card>();
         private static readonly IDealer Instance = new Dealer();
+        private readonly List<Card> _discardedCards = new List<Card>();
         private readonly Random _randomNumber;
         private readonly List<Card> _stack = new List<Card>();
 
@@ -17,11 +17,6 @@ namespace pg3302_Eksamen.dealers
             _randomNumber = new Random();
             for (var i = 0; i < 52; i++) _stack.Add((Card) i);
             Console.WriteLine("added card to stack");
-        }
-
-        public static IDealer GetInstance()
-        {
-            return Instance;
         }
 
         public Card DrawCard()
@@ -38,7 +33,7 @@ namespace pg3302_Eksamen.dealers
             while (true)
             {
                 var card = GetCard();
-                if (SpecialCards.GetSpecialCards().Contains(card)) continue;
+                if (SpecialCard.GetSpecialCards().Contains(card)) continue;
                 _stack.Remove(card);
                 return card;
             }
@@ -49,7 +44,7 @@ namespace pg3302_Eksamen.dealers
             while (true)
             {
                 var card = GetCard();
-                if (SpecialCards.GetSpecialCards().Contains(card)) continue;
+                if (SpecialCard.GetSpecialCards().Contains(card)) continue;
                 return card;
             }
         }
@@ -57,6 +52,11 @@ namespace pg3302_Eksamen.dealers
         public void DiscardCard(Card card)
         {
             _discardedCards.Add(card);
+        }
+
+        public static IDealer GetInstance()
+        {
+            return Instance;
         }
 
         private Card GetCard()

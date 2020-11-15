@@ -1,45 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using pg3302_Eksamen.dealers;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen.Cards
 {
-    public class SpecialCards
+    public class SpecialCard
     {
-        private static readonly List<Card> SpecialCard = new List<Card>();
+        private static readonly List<Card> SpecialCards = new List<Card>();
         //Bomb = _specialCards[0]
         //Vulture = _specialCards[1]
         //SetQuarantine = _specialCards[2]
         //Joker = _specialCards[3]
 
-        public SpecialCards()
+        public SpecialCard()
         {
-            while (SpecialCard.Count <= 4)
-                SpecialCard.Add(Dealer.GetInstance().DrawSpecialCards());
+            while (SpecialCards.Count <= 4)
+                SpecialCards.Add(Dealer.GetInstance().DrawSpecialCards());
         }
 
         public static bool EqualJoker(Card card)
         {
-            return SpecialCard[3].Equals(card);
+            return SpecialCards[3].Equals(card);
         }
 
         public static bool EqualBomb(Card card)
         {
-            return SpecialCard[2].Equals(card);
+            return SpecialCards[2].Equals(card);
         }
 
         public static List<Card> GetSpecialCards()
         {
-            return SpecialCard;
+            return SpecialCards;
         }
 
         public static bool SeeIfSpecialCard(IPlayer player, Card card)
         {
             var number = 0;
-            for (var i = 0; i < SpecialCard.Count - 1; i++)
-                if (card.Equals(SpecialCard[i]))
+            for (var i = 0; i < SpecialCards.Count - 1; i++)
+                if (card.Equals(SpecialCards[i]))
                     number = i + 1;
             var message = $"player {Thread.CurrentThread.Name}";
             switch (number)

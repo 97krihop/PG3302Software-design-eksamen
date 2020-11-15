@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using pg3302_Eksamen.Cards;
-using pg3302_Eksamen.dealers;
+using pg3302_Eksamen.Dealers;
 using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players.Interface;
 
-namespace pg3302_Eksamen.players
+namespace pg3302_Eksamen.Players
 {
     public abstract class BasePlayer : IPlayer
     {
@@ -40,9 +40,9 @@ namespace pg3302_Eksamen.players
             }
 
             var card = _Dealer.DrawCard();
-            if (SpecialCards.SeeIfSpecialCard(player, card)) Hand.Add(card);
+            if (SpecialCard.SeeIfSpecialCard(player, card)) Hand.Add(card);
             StandardMessage.DrawMassage(card);
-            return !SpecialCards.EqualBomb(card);
+            return !SpecialCard.EqualBomb(card);
         }
 
         public void AddNonSpecialCardToHand(int amount)

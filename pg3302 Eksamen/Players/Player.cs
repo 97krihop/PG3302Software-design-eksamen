@@ -2,7 +2,7 @@
 using System.Linq;
 using pg3302_Eksamen.Cards;
 
-namespace pg3302_Eksamen.players
+namespace pg3302_Eksamen.Players
 {
     public class Player : BasePlayer
     {
@@ -11,7 +11,7 @@ namespace pg3302_Eksamen.players
             var suite = new Dictionary<string, int> {{"Heart", 0}, {"Spade", 0}, {"Diamond", 0}, {"Club", 0}};
 
             foreach (var card in Hand)
-                if (SpecialCards.EqualJoker(card))
+                if (SpecialCard.EqualJoker(card))
                 {
                     if (!countWithJoker) continue;
                     suite["Heart"]++;
@@ -43,7 +43,7 @@ namespace pg3302_Eksamen.players
         {
             Quarantine = true;
         }
-        
+
         public override void RemoveCardFromHand()
         {
             var card = CalculateCard(CalcPoints(false));
@@ -64,7 +64,7 @@ namespace pg3302_Eksamen.players
 
             Card? result = null;
             foreach (var card in Hand.Where(card =>
-                card.ToString().StartsWith(cardSuite) && !SpecialCards.EqualJoker(card)))
+                card.ToString().StartsWith(cardSuite) && !SpecialCard.EqualJoker(card)))
                 result = card;
             result ??= Hand[0];
             return (Card) result;

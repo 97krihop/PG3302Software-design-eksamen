@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using pg3302_Eksamen.players;
+using pg3302_Eksamen.Players;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen
@@ -34,7 +34,7 @@ namespace pg3302_Eksamen
         {
             return new Player();
         }
-        
+
         public static Game GenerateGame()
         {
             return new Game();
