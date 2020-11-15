@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using pg3302_Eksamen.Cards;
-using pg3302_Eksamen.dealers;
-using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen
@@ -11,12 +9,6 @@ namespace pg3302_Eksamen
     {
         private static readonly object Lock = new object();
         private static bool _win;
-        private readonly IDealer _dealer;
-
-        public Game()
-        {
-            _dealer = Dealer.GetInstance();
-        }
 
         public void Start()
         {
@@ -51,7 +43,7 @@ namespace pg3302_Eksamen
             }
         }
 
-        private IEnumerable<IPlayer> IntiGame(int inputPlayer)
+        private static IEnumerable<IPlayer> IntiGame(int inputPlayer)
         {
             var player = new List<IPlayer>();
             for (var i = 0; i < inputPlayer; i++)

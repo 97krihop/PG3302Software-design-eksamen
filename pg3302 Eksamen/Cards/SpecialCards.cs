@@ -30,11 +30,6 @@ namespace pg3302_Eksamen.Cards
             return SpecialCard[2].Equals(card);
         }
 
-        public static void SetCard(Card card)
-        {
-            SpecialCard.Add(card);
-        }
-
         public static List<Card> GetSpecialCards()
         {
             return SpecialCard;
