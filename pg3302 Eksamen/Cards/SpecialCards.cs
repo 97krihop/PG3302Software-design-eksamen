@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.dealers;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen.Cards
 {
-    public static class SpecialCards
+    public class SpecialCards
     {
         private static readonly List<Card> SpecialCard = new List<Card>();
+        //Bomb = _specialCards[0]
+        //Vulture = _specialCards[1]
+        //SetQuarantine = _specialCards[2]
+        //Joker = _specialCards[3]
+
+        public SpecialCards()
+        {
+            while (SpecialCard.Count <= 4)
+                SpecialCard.Add(Dealer.GetInstance().DrawSpecialCards());
+        }
 
         public static bool EqualJoker(Card card)
         {

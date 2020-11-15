@@ -5,6 +5,6 @@ namespace pg3302_Eksamen.dealers.Interface
     public interface IDrawCard
     {
         Card DrawCard();
-        void DrawSpecialCards();
+        Card DrawSpecialCards();
     }
 }

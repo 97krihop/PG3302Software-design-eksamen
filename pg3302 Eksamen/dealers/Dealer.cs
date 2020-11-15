@@ -8,14 +8,20 @@ namespace pg3302_Eksamen.dealers
     public class Dealer : IDealer
     {
         private readonly List<Card> _discardedCards = new List<Card>();
+        private static readonly IDealer Instance = new Dealer();
         private readonly Random _randomNumber;
         private readonly List<Card> _stack = new List<Card>();
 
-        public Dealer()
+        private Dealer()
         {
             _randomNumber = new Random();
             for (var i = 0; i < 52; i++) _stack.Add((Card) i);
             Console.WriteLine("added card to stack");
+        }
+
+        public static IDealer GetInstance()
+        {
+            return Instance;
         }
 
         public Card DrawCard()
@@ -25,29 +31,6 @@ namespace pg3302_Eksamen.dealers
             _stack.Remove(card);
             return card;
         }
-
-        public void DrawSpecialCards()
-        {
-            //Bomb = _specialCards[0]
-            //Vulture = _specialCards[1]
-            //SetQuarantine = _specialCards[2]
-            //Joker = _specialCards[3]
-            for (var i = 0; i < 4; i++)
-                while (true)
-                {
-                    var card = GetCard();
-                    if (SpecialCards.GetSpecialCards().Contains(card)) continue;
-                    SpecialCards.SetCard(card);
-                    Console.WriteLine($"special{i + 1} cards: {card}");
-                    break;
-                }
-        }
-
-        public void DiscardCard(Card card)
-        {
-            _discardedCards.Add(card);
-        }
-
 
         public Card DrawNonSpecialCard()
         {
@@ -59,6 +42,21 @@ namespace pg3302_Eksamen.dealers
                 _stack.Remove(card);
                 return card;
             }
+        }
+
+        public Card DrawSpecialCards()
+        {
+            while (true)
+            {
+                var card = GetCard();
+                if (SpecialCards.GetSpecialCards().Contains(card)) continue;
+                return card;
+            }
+        }
+
+        public void DiscardCard(Card card)
+        {
+            _discardedCards.Add(card);
         }
 
         private Card GetCard()

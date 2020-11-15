@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using pg3302_Eksamen.Cards;
+using pg3302_Eksamen.dealers;
 using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players.Interface;
 
@@ -11,12 +12,12 @@ namespace pg3302_Eksamen.players
         protected readonly List<Card> Hand;
 
         //vi har bare 1 underclass men vi viser til at vi vet hvordan en abstract classe skal se ut 
-        protected IDealer Dealer;
+        protected IDealer _Dealer;
         protected bool Quarantine;
 
-        protected BasePlayer(IDealer dealer)
+        protected BasePlayer()
         {
-            Dealer = dealer;
+            _Dealer = Dealer.GetInstance();
             Hand = new List<Card>();
         }
 
@@ -38,7 +39,7 @@ namespace pg3302_Eksamen.players
                 return false;
             }
 
-            var card = Dealer.DrawCard();
+            var card = _Dealer.DrawCard();
             if (SpecialCards.SeeIfSpecialCard(player, card)) Hand.Add(card);
             StandardMessage.DrawMassage(card);
             return !SpecialCards.EqualBomb(card);
@@ -55,7 +56,7 @@ namespace pg3302_Eksamen.players
                     return;
                 }
 
-                var card = Dealer.DrawNonSpecialCard();
+                var card = _Dealer.DrawNonSpecialCard();
                 Hand.Add(card);
                 StandardMessage.DrawMassage(card);
             }
@@ -65,7 +66,7 @@ namespace pg3302_Eksamen.players
 
         public void RemoveAllCardFromHand()
         {
-            foreach (var card in Hand) Dealer.DiscardCard(card);
+            foreach (var card in Hand) _Dealer.DiscardCard(card);
             Hand.Clear();
         }
     }

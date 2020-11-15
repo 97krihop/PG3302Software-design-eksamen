@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using pg3302_Eksamen.Cards;
+using pg3302_Eksamen.dealers;
 using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players.Interface;
 
@@ -13,7 +15,7 @@ namespace pg3302_Eksamen
 
         public Game()
         {
-            _dealer = Factory.GenerateDealer();
+            _dealer = Dealer.GetInstance();
         }
 
         public void Start()
@@ -54,14 +56,14 @@ namespace pg3302_Eksamen
             var player = new List<IPlayer>();
             for (var i = 0; i < inputPlayer; i++)
             {
-                player.Add(Factory.GeneratePlayer(_dealer));
+                player.Add(Factory.GeneratePlayer());
                 StandardMessage.PlayerMassage(i + 1);
                 player[i].AddNonSpecialCardToHand(4);
                 player[i].ShowHand();
             }
 
             Console.WriteLine("-------------");
-            _dealer.DrawSpecialCards();
+            new SpecialCards();
             return player;
         }
 

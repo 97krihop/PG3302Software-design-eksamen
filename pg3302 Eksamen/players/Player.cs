@@ -1,17 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using pg3302_Eksamen.Cards;
-using pg3302_Eksamen.dealers.Interface;
 
 namespace pg3302_Eksamen.players
 {
     public class Player : BasePlayer
     {
-        public Player(IDealer dealer) : base(dealer)
-        {
-        }
-
-
         private Dictionary<string, int> CalcPoints(bool countWithJoker)
         {
             var suite = new Dictionary<string, int> {{"Heart", 0}, {"Spade", 0}, {"Diamond", 0}, {"Club", 0}};
@@ -49,13 +43,12 @@ namespace pg3302_Eksamen.players
         {
             Quarantine = true;
         }
-
-
+        
         public override void RemoveCardFromHand()
         {
             var card = CalculateCard(CalcPoints(false));
             Hand.Remove(card);
-            Dealer.DiscardCard(card);
+            _Dealer.DiscardCard(card);
         }
 
         private Card CalculateCard(Dictionary<string, int> suite)
