@@ -39,16 +39,11 @@ namespace pg3302_Eksamen.Players
             return suite["Club"] >= 4;
         }
 
-        public override void SetQuarantine()
-        {
-            Quarantine = true;
-        }
-
         public override void RemoveCardFromHand()
         {
             var card = CalculateCard(CalcPoints(false));
             Hand.Remove(card);
-            _Dealer.DiscardCard(card);
+            Dealer.DiscardCard(card);
         }
 
         private Card CalculateCard(Dictionary<string, int> suite)

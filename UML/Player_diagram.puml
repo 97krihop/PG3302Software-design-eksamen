@@ -1,0 +1,48 @@
+﻿@startuml
+
+abstract BasePlayer implements IPlayer{
+    # IDealer _Dealer
+    # readonly List<Card> Hand
+    # bool Quarantine
+    # BasePlayer()
+    + ShowHand()
+    + SeeIfWins() {abstract}
+    + SetQuarantine()
+    + AddCardToHand(IPlayer player)
+    + AddNonSpecialCardToHand(int amount)
+    + RemoveCardFromHand() {abstract}
+    + RemoveAllCardFromHand() 
+}
+
+class Player extends BasePlayer{
+    - CalcPoints(bool countWithJoker)
+    + SeeIfWins() 
+    + RemoveCardFromHand()
+    - CalculateCard(Dictionary<string, int> suite)
+}
+interface IPlayer
+
+interface IAddCardToHand{
+  + AddCardToHand(IPlayer player)
+  + AddNonSpecialCardToHand(int amount)
+}
+interface IQuarantine{
+    + SetQuarantine()
+}
+interface IRemoveCardFromHand{
+    + RemoveCardFromHand()
+    + RemoveAllCardFromHand()
+}
+interface ISeeIfWins{
+    + SeeIfWins()
+}
+interface IShowHand{
+    + ShowHand()
+}
+IPlayer ..|> IAddCardToHand
+IPlayer ..|> IQuarantine
+IPlayer ..|> IRemoveCardFromHand
+IPlayer ..|> ISeeIfWins
+IPlayer ..|> IShowHand
+
+@enduml

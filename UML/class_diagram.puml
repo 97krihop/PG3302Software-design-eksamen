@@ -1,0 +1,99 @@
+﻿@startuml
+
+class Program {
+    - Main() {static}
+}
+
+class SpecialCard {
+    - readonly List<Card> SpecialCards {static}
+    + SpecialCard()
+    + EqualJoker(Card card) {static}
+    + EqualBomb(Card card) {static}
+    + List<Card> GetSpecialCards() {static}
+    + SeeIfSpecialCard(IPlayer player, Card card) {static}
+}
+
+class Dealer implements IDealer {
+    + readonly IDealer Instance {static}
+    + readonly List<Card> _discardedCards 
+    + readonly Random _randomNumber
+    + readonly List<Card> _stack 
+    - Dealer()
+    + DrawCard()
+    + DrawNonSpecialCard()
+    + DrawSpecialCards()
+    + DiscardCard(Card card)
+    + GetInstance() {static}
+    - GetCard()
+    - ReShuffleDiscardedCards()
+}
+
+abstract BasePlayer implements IPlayer{
+    # IDealer _Dealer
+    # readonly List<Card> Hand
+    # bool Quarantine
+    # BasePlayer()
+    + ShowHand()
+    + SeeIfWins() {abstract}
+    + SetQuarantine()
+    + AddCardToHand(IPlayer player)
+    + AddNonSpecialCardToHand(int amount)
+    + RemoveCardFromHand() {abstract}
+    + RemoveAllCardFromHand() 
+}
+
+class Player extends BasePlayer{
+    - CalcPoints(bool countWithJoker)
+    + SeeIfWins() 
+    + RemoveCardFromHand()
+    - CalculateCard(Dictionary<string, int> suite)
+}
+
+class Game {
+    - readonly object Lock {static}
+    - bool _win {static}
+    + Start()
+    - int GetPlayerCount() {static}
+    - IntiGame(int inputPlayer) {static}
+    + OneRound(IPlayer player) {static}
+    + GetWin() {static}
+}
+
+class Factory {
+    + GenerateThread(IEnumerable<IPlayer> players) {static}
+    - Play(IPlayer player) {static}
+    + GeneratePlayer() {static}
+    + GenerateSpecialCards() {static}
+    + GenerateGame() {static}
+}
+
+class StandardMessage {
+    + PlayerMassage(int i) {static}
+    + StartMassage() {static}
+    + DrawMassage(Card card) {static}
+    + HandMassage(IEnumerable<Card> cards) {static}
+    + WinMassage() {static}
+}
+
+enum Card {
+    Heart_Ace
+    Heart_Two
+    Heart_Three
+    Heart_Four
+    Heart_Five
+    Heart_Six
+    ...
+}
+
+Program --> Game
+Program --> Factory
+Factory --> Game
+Factory --> Player
+Factory --> SpecialCard
+Game *-- Factory
+Game o-- Player
+Game o-- Dealer
+SpecialCard -- Game
+
+
+@enduml

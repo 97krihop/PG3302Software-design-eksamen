@@ -1,0 +1,29 @@
+﻿@startuml
+
+class Dealer implements IDealer {
+    + readonly IDealer Instance {static}
+    + readonly List<Card> _discardedCards 
+    + readonly Random _randomNumber
+    + readonly List<Card> _stack 
+    - Dealer()
+    + DrawCard()
+    + DrawNonSpecialCard()
+    + DrawSpecialCards()
+    + DiscardCard(Card card)
+    + GetInstance() {static}
+    - GetCard()
+    - ReShuffleDiscardedCards()
+}
+
+interface IDealer
+interface IDiscardCard{
+    + DiscardCard(Card card)
+    + DrawNonSpecialCard()
+}
+interface IDrawCard{
+    + DrawCard()
+    + DrawSpecialCards()
+}
+IDealer ..|> IDiscardCard
+IDealer ..|> IDrawCard 
+@enduml

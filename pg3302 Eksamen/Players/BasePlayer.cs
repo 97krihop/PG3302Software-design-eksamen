@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using pg3302_Eksamen.Cards;
-using pg3302_Eksamen.Dealers;
 using pg3302_Eksamen.dealers.Interface;
 using pg3302_Eksamen.players.Interface;
 
@@ -9,15 +8,14 @@ namespace pg3302_Eksamen.Players
 {
     public abstract class BasePlayer : IPlayer
     {
-        protected readonly List<Card> Hand;
-
         //vi har bare 1 underclass men vi viser til at vi vet hvordan en abstract classe skal se ut 
-        protected IDealer _Dealer;
+        protected IDealer Dealer;
+        protected readonly List<Card> Hand;
         protected bool Quarantine;
 
         protected BasePlayer()
         {
-            _Dealer = Dealer.GetInstance();
+            Dealer = Dealers.Dealer.GetInstance();
             Hand = new List<Card>();
         }
 
@@ -28,7 +26,11 @@ namespace pg3302_Eksamen.Players
 
 
         public abstract bool SeeIfWins();
-        public abstract void SetQuarantine();
+
+        public void SetQuarantine()
+        {
+            Quarantine = true;
+        }
 
         public bool AddCardToHand(IPlayer player)
         {
@@ -39,7 +41,7 @@ namespace pg3302_Eksamen.Players
                 return false;
             }
 
-            var card = _Dealer.DrawCard();
+            var card = Dealer.DrawCard();
             if (SpecialCard.SeeIfSpecialCard(player, card)) Hand.Add(card);
             StandardMessage.DrawMassage(card);
             return !SpecialCard.EqualBomb(card);
@@ -56,7 +58,7 @@ namespace pg3302_Eksamen.Players
                     return;
                 }
 
-                var card = _Dealer.DrawNonSpecialCard();
+                var card = Dealer.DrawNonSpecialCard();
                 Hand.Add(card);
                 StandardMessage.DrawMassage(card);
             }
@@ -66,7 +68,7 @@ namespace pg3302_Eksamen.Players
 
         public void RemoveAllCardFromHand()
         {
-            foreach (var card in Hand) _Dealer.DiscardCard(card);
+            foreach (var card in Hand) Dealer.DiscardCard(card);
             Hand.Clear();
         }
     }
