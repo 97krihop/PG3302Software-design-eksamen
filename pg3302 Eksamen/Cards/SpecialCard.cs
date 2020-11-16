@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.Dealers;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen.Cards

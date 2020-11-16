@@ -1,0 +1,43 @@
+﻿@startuml
+actor User
+
+box Card game 
+   participant Main
+   participant Game
+   participant Dealer
+   participant Player
+   participant Factory
+end box
+
+User -> Main: stars game
+Main -> Factory: generateGame()
+Main <-- Factory: Game
+Main -> Game: start()
+Game -> Game: getPlayerCount()
+User <-- Game: "How many players? (2-4)"
+User -> Game: n
+Game -> Game: IntiGame(n)
+loop n times
+    Game -> Factory:  GeneratePlayer()
+    Game <-- Factory:  Player
+    Game -> Player: AddNonSpecialCardToHand(4)
+    Player --> User: ShowHand()
+end
+Game -> Factory: GenerateThread(Players)
+loop n times
+    Factory -> Factory: new Thread(() => Play(Player))
+    Factory -> Factory: thread.start()
+end
+group while win = false
+    Factory -> Factory: Thread.Sleep(200)
+    Factory -> Game: OneRound(player)
+    group lock (Lock)
+        Game -> Player: AddCardToHand()          
+        Game -> Player: RemoveCardFromHand()
+        Game -> Player: ShowHand()
+        User <-- Player: hand
+        Game -> Player: SeeIfWins()
+    end
+end 
+User <-- Game: winner
+@enduml

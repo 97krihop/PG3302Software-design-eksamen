@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using pg3302_Eksamen.Cards;
 using pg3302_Eksamen.Players;
 using pg3302_Eksamen.players.Interface;
 
@@ -17,11 +18,7 @@ namespace pg3302_Eksamen
                 Console.WriteLine($"player: {i} Starts now");
                 var thread = new Thread(() =>
                     {
-                        while (!Game.GetWin())
-                        {
-                            Thread.Sleep(200);
-                            Game.OneRound(player);
-                        }
+                        Play(player);
                     })
                     {Name = i.ToString()};
 
@@ -30,9 +27,21 @@ namespace pg3302_Eksamen
             }
         }
 
+        private static void Play(IPlayer player)
+        {
+            while (!Game.GetWin())
+            {
+                Thread.Sleep(200);
+                Game.OneRound(player);
+            }
+        }   
         public static IPlayer GeneratePlayer()
         {
             return new Player();
+        }
+        public static SpecialCard GenerateSpecialCards()
+        {
+            return new SpecialCard();
         }
 
         public static Game GenerateGame()

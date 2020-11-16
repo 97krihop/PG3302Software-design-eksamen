@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using pg3302_Eksamen.Cards;
 using pg3302_Eksamen.players.Interface;
 
 namespace pg3302_Eksamen
@@ -55,7 +54,7 @@ namespace pg3302_Eksamen
             }
 
             Console.WriteLine("-------------");
-            new SpecialCard();
+            Factory.GenerateSpecialCards();
             return player;
         }
 
