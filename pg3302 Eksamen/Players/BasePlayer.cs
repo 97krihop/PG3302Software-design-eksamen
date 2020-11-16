@@ -42,8 +42,8 @@ namespace pg3302_Eksamen.Players
             }
 
             var card = Dealer.DrawCard();
-            if (SpecialCard.SeeIfSpecialCard(player, card)) Hand.Add(card);
             StandardMessage.DrawMassage(card);
+            if (SpecialCard.SeeIfSpecialCard(player, card)) Hand.Add(card);
             return !SpecialCard.EqualBomb(card);
         }
 
